@@ -4,8 +4,11 @@ Debian 13 "trixie" standard container template for s390x
 Unofficial build for the Proxmox VE s390x port (https://github.com/cyberdotgent).
 Not produced, endorsed or supported by Proxmox Server Solutions GmbH.
 
-Same package set as debian-13-trixie-std-64, built for s390x. Only dab.conf
-differs (Architecture, Version, Maintainer, Description).
+Same package set as debian-13-trixie-std-64, built for s390x. dab.conf differs
+in Architecture, Version, Maintainer and Description; the Makefile excludes
+s390-tools and sysconfig-hardware (pulled in by priority on s390x only, useless
+in a container without CCW hardware). Without them the package list equals the
+amd64 template's, minus dmidecode (not built for s390x).
 
 Requirements
 ------------
@@ -18,6 +21,14 @@ Requirements
 
 Build
 -----
-  make            # -> debian-13-standard_13.7-1_s390x.tar.zst
+  make            # -> debian-13-standard_13.7-2_s390x.tar.zst
 
-To use a local mirror, uncomment and adjust the Source: lines in dab.conf.
+dab writes its Source: lines into the template's
+/etc/apt/sources.list.d/debian.sources, so keep the defaults (deb.debian.org,
+security.debian.org) for a release build. To download through a local mirror
+or proxy instead, add Mirror: lines to dab.conf, e.g.
+
+  Mirror: http://deb.debian.org/debian => http://mirror.example.com/debian
+  Mirror: http://security.debian.org => http://mirror.example.com/debian-security
+
+Mirrors are only used for downloads and never end up in the template.

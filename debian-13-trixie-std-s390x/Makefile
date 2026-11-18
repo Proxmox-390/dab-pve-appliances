@@ -1,5 +1,9 @@
 all: info/init_ok
-	dab bootstrap
+	# s390-tools (Priority: important on s390x only) and sysconfig-hardware
+	# (standard) manage CCW/zFCP/DASD hardware, which a container never sees.
+	# Excluding them keeps the package set equal to the amd64 template; their
+	# dependencies drop out with them since nothing else pulls them in.
+	dab bootstrap --exclude s390-tools,sysconfig-hardware
 	echo "disable systemd-networkd-wait-online.service" >00-pve-template.preset
 	dab cp 00-pve-template.preset /etc/systemd/system-preset/00-pve-template.preset
 	rm 00-pve-template.preset
