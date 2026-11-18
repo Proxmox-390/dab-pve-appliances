@@ -1,0 +1,23 @@
+Debian 13 "trixie" standard container template for s390x
+=========================================================
+
+Unofficial build for the Proxmox VE s390x port (https://github.com/cyberdotgent).
+Not produced, endorsed or supported by Proxmox Server Solutions GmbH.
+
+Same package set as debian-13-trixie-std-64, built for s390x. Only dab.conf
+differs (Architecture, Version, Maintainer, Description).
+
+Requirements
+------------
+- dab with s390x support: https://github.com/cyberdotgent/dab, branch
+  s390x/arch-support (allows Architecture: s390x, adds the lib32 usr-merge link).
+- An s390x host or VM running Debian 13 with lxc-pve (or lxc) installed: dab
+  runs the target's binaries in an LXC container, so it cannot cross-build.
+  Install lxc-pve before dab if you use Proxmox's lxc, and install xz-utils
+  (trixie-updates/-security only publish .xz indexes).
+
+Build
+-----
+  make            # -> debian-13-standard_13.7-1_s390x.tar.zst
+
+To use a local mirror, uncomment and adjust the Source: lines in dab.conf.
