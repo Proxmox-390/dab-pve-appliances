@@ -1,7 +1,7 @@
 Debian 13 "trixie" standard container template for s390x
 =========================================================
 
-Unofficial build for the Proxmox VE s390x port (https://github.com/cyberdotgent).
+Unofficial build of the Proxmox-390 project (https://proxmox-390.legitimatebusiness.be).
 Not produced, endorsed or supported by Proxmox Server Solutions GmbH.
 
 Same package set as debian-13-trixie-std-64, built for s390x. dab.conf differs
@@ -12,7 +12,7 @@ amd64 template's, minus dmidecode (not built for s390x).
 
 Requirements
 ------------
-- dab with s390x support: https://github.com/cyberdotgent/dab, branch
+- dab with s390x support: https://github.com/Proxmox-390/dab, branch
   s390x/arch-support (allows Architecture: s390x, adds the lib32 usr-merge link).
 - An s390x host or VM running Debian 13 with lxc-pve (or lxc) installed: dab
   runs the target's binaries in an LXC container, so it cannot cross-build.
@@ -21,7 +21,7 @@ Requirements
 
 Build
 -----
-  make            # -> debian-13-standard_13.7-2_s390x.tar.zst
+  make            # -> debian-13-standard_13.7-3_s390x.tar.zst
 
 dab writes its Source: lines into the template's
 /etc/apt/sources.list.d/debian.sources, so keep the defaults (deb.debian.org,
@@ -32,3 +32,9 @@ or proxy instead, add Mirror: lines to dab.conf, e.g.
   Mirror: http://security.debian.org => http://mirror.example.com/debian-security
 
 Mirrors are only used for downloads and never end up in the template.
+
+Published
+---------
+Built templates are published in the Proxmox-390 container template index,
+https://proxmox-390-apt.legitimatebusiness.be/container-index/, which pveam
+on Proxmox-390 nodes uses (signed with the Proxmox-390 archive key).
