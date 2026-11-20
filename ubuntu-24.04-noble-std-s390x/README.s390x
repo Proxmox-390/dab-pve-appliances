@@ -1,0 +1,42 @@
+Ubuntu 24.04 "noble" standard container template for s390x
+==========================================================
+
+Unofficial build of the Proxmox-390 project (https://proxmox-390.legitimatebusiness.be).
+Not produced, endorsed or supported by Proxmox Server Solutions GmbH or Canonical.
+
+Same definition as ubuntu-24.04-noble-std-64, built for s390x. dab.conf differs
+in Architecture, Version, Maintainer and Description. Packages come from the
+Ubuntu ports archive (ports.ubuntu.com/ubuntu-ports), which also carries the
+security updates for s390x; archive.ubuntu.com has amd64 and i386 only.
+
+The Ubuntu 24.04 userland is built for z13 and later (gcc --with-arch=z13).
+Ubuntu 26.04 and later build their userland for z15 (gcc --with-arch=z15) and
+do not run on older machines, so no s390x templates are provided for them.
+
+Requirements
+------------
+- dab with s390x support: https://github.com/Proxmox-390/dab, branch
+  s390x/packaging (3.9.2+s390x2 or later), which allows Architecture: s390x
+  and uses ports.ubuntu.com as the default Ubuntu mirror on architectures
+  other than amd64/i386. With an older dab, uncomment the Source: lines.
+- An s390x host or VM running Debian 13 with lxc-pve (or lxc), xz-utils and
+  ubuntu-keyring installed: dab runs the target's binaries in an LXC
+  container, so it cannot cross-build.
+
+Build
+-----
+  make            # -> ubuntu-24.04-standard_24.04-1_s390x.tar.zst
+
+dab writes its Source: lines into the template's apt sources, so keep the
+defaults for a release build. To download through a local mirror or proxy
+instead, add a Mirror: line to dab.conf, e.g.
+
+  Mirror: http://ports.ubuntu.com/ubuntu-ports => http://mirror.example.com/ubuntu-ports
+
+Mirrors are only used for downloads and never end up in the template.
+
+Published
+---------
+Built templates are published in the Proxmox-390 container template index,
+https://proxmox-390-apt.legitimatebusiness.be/container-index/, which pveam
+on Proxmox-390 nodes uses (signed with the Proxmox-390 archive key).
