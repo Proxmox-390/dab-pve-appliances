@@ -1,0 +1,45 @@
+Debian 11 "bullseye" standard container template for s390x
+==========================================================
+
+Unofficial build of the Proxmox-390 project (https://proxmox-390.legitimatebusiness.be).
+Not produced, endorsed or supported by Proxmox Server Solutions GmbH.
+
+Same definition as archive/debian-11-bullseye-std-64 (the last upstream
+Debian 11 appliance), built for s390x. dab.conf differs in Architecture,
+Version, Maintainer, Description and Source; the Makefile excludes s390-tools
+and sysconfig-hardware (pulled in by priority on s390x only, useless in a
+container without CCW hardware). Without them the package list equals the
+amd64 debian-11-standard_11.7-1 template, minus dmidecode (not built for s390x).
+
+End of life: Debian 11 is only maintained by Debian LTS, which does not cover
+s390x. deb.debian.org no longer carries bullseye for s390x, so the sources
+point at archive.debian.org (bullseye, the final 11.11 point release, and
+bullseye-updates). There are no security updates. archive.debian.org's
+Release files carry no Valid-Until, so apt works without extra options.
+Use debian-13-standard for anything that needs security support.
+
+Requirements
+------------
+- dab with s390x support: https://github.com/Proxmox-390/dab, branch
+  s390x/packaging (allows Architecture: s390x).
+- An s390x host or VM running Debian 13 with lxc-pve (or lxc) and xz-utils
+  installed: dab runs the target's binaries in an LXC container, so it cannot
+  cross-build.
+
+Build
+-----
+  make            # -> debian-11-standard_11.11-1_s390x.tar.zst
+
+dab writes its Source: lines into the template's /etc/apt/sources.list, so
+keep the archive.debian.org lines for a release build. To download through a
+local mirror or proxy instead, add a Mirror: line to dab.conf, e.g.
+
+  Mirror: http://archive.debian.org/debian => http://mirror.example.com/debian-archive
+
+Mirrors are only used for downloads and never end up in the template.
+
+Published
+---------
+Built templates are published in the Proxmox-390 container template index,
+https://proxmox-390-apt.legitimatebusiness.be/container-index/, which pveam
+on Proxmox-390 nodes uses (signed with the Proxmox-390 archive key).
