@@ -25,7 +25,7 @@ Requirements
 
 Build
 -----
-  make            # -> ubuntu-24.04-standard_24.04-1_s390x.tar.zst
+  make            # -> ubuntu-24.04-standard_24.04-2_s390x.tar.zst
 
 dab writes its Source: lines into the template's apt sources, so keep the
 defaults for a release build. To download through a local mirror or proxy
@@ -34,6 +34,9 @@ instead, add a Mirror: line to dab.conf, e.g.
   Mirror: http://ports.ubuntu.com/ubuntu-ports => http://mirror.example.com/ubuntu-ports
 
 Mirrors are only used for downloads and never end up in the template.
+
+The template does not contain a snakeoil certificate/key: Ubuntu's
+ssl-cert.service generates a per-container pair on first boot.
 
 Published
 ---------
